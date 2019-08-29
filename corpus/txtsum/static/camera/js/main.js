@@ -233,7 +233,9 @@ function takeSnapshot() {
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    console.log('hello')
+                    
+                    // var value1 = '{{corpus}}';
+                    // console.log(value1);
                     // document.write(response);
                     location.replace('/home/features')
                     // document.getElementById('username').setAttribute('value', response.username);
@@ -317,4 +319,9 @@ function blobToFile(theBlob, fileName){
     return theBlob;
 }
 
+function summ(){
+    var corpus1 = '{{corpus}}';
+    document.getElementById("comment").style.display = "block";
+    document.getElementById("comment").innerHTML = corpus1;
+}
 
