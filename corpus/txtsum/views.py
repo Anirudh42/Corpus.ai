@@ -27,7 +27,7 @@ def image(request):
     im = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     # Run tesseract OCR on image
     corpus = pytesseract.image_to_string(im, config=config)
-    # print(corpus)
+    print(corpus)
     request.session['corpus'] = corpus
     # Print recognized text
     return redirect('features')

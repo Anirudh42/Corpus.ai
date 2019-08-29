@@ -26,6 +26,7 @@
   <!-- Custom styles for this template -->
   <link href="{% static 'features/css/new-age.min.css' %}" rel="stylesheet">
   <link href="{% static 'features/css/main.css' %}" rel="stylesheet">
+  <script src="{% static 'features/js/main.js' %}"></script>
 
 </head>
 
@@ -34,7 +35,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="javascript:history.back()">Home</a>
+      <a class="navbar-brand js-scroll-trigger" href="../">Home</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -57,12 +58,19 @@
 
   <header class="masthead">
       <section class="features" id="features">
+
           <div class="section-heading text-center">
-              <h2>Upload Files or Click Photo</h2>
+              <h2>Upload the Text Corpus here!</h2>
             </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-lg my-auto">
+
+            <div class="col my-auto text-center">
+              <a  class="btn btn-outline btn-xl js-scroll-trigger" onclick="file()">File Upload</a>
+              <a  class="btn btn-outline btn-xl js-scroll-trigger" onclick="img1()">Click Photo</a>
+              <a  class="btn btn-outline btn-xl js-scroll-trigger" onclick="url1()">Enter URL</a>
+              <a  class="btn btn-outline btn-xl js-scroll-trigger" onclick="text1()">Enter Text</a>
+            </div>
+
+              <div class="col-lg my-auto" id="File" style="display:none">
                 <div class="container-fluid">
                           <div class="file-upload">
                               <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image/File</button>
@@ -83,26 +91,42 @@
                             </div>
                       </div>
                     </div>
-                    <div class="col-lg my-auto">
-                    <h3>(or)</h3>
-                  </div>
-                    <div class="col-lg-4 my-auto">
+              
+                <div class="col-lg my-auto" id="img1" style="display:none">
+                  <div class="container-fluid">
+                    <!-- <div class="col-lg-12 my-auto center"> -->
                       <div class="feature-item">
-                        <i class="icon-camera text-primary"></i>
-                        <a href="camera"><h3>Click to Take a Photo Instead</h3></a>
+                        <i class="text-primary"></i>
+                        <a href="camera"><h3>Confirm to Open your Camera!</h3></a>
                         <p class="text-muted">We will read the Text from Image for you</p>
                       </div>
-                    </div>
-                  </div>
-                    <hr>
-                      <div class="col my-auto text-center">
-                      <a href="#summary" class="btn btn-outline btn-xl js-scroll-trigger" onclick=summ()>Summarize!</a>
-                      </div>
-                    <hr>
-                      <div class="col my-auto text-center">
-                          <a href="#qna" class="btn btn-outline btn-xl js-scroll-trigger">Answer My Questions</a>
-                      </div>
+                    <!-- </div> -->
                 </div>
+                </div>
+
+                <div class="col-lg my-auto" id="url1" style="display:none">
+                  <!-- <div class="container-fluid"> -->
+                    <div class='file-upload'>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroup-sizing-default">URL:</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                      </div>
+
+                      </div>
+                    <!-- </div> -->
+                </div>
+                
+                <div class="col-lg my-auto" id="text1" style="display:none">
+                    <!-- <div class="container-fluid"> -->
+                <div class='file-upload'>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1"></label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Enter your Text here" rows="10"></textarea>
+                  </div>
+                </div>
+              </div>
         </section>
 
   </header>
@@ -111,7 +135,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 mx-auto">
-          {% comment %} <h2 class="section-heading">Summary:</h2> {% endcomment %}
+      <input type="hidden" id="myVar" name="variable" value="{{ corpus }}">
       <textarea id="comment" style="width: 400px; padding: 10px; height: 150px; margin:auto; 
           display: none; font-family:Sans-serif; font-size:1.2em;">     
       </textarea>          
@@ -137,8 +161,12 @@
     <div class="container">
       <div class="section-heading text-center">
         <h2>Question Answering Task!</h2>
-        <p class="text-muted">Enter your Question, So that We can Answer you!</p>
-        <hr>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Enter your Question" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">Answer/button>
+          </div>
+        </div>
       </div>
      </div>
   </section>
@@ -199,7 +227,7 @@
   <!-- Bootstrap core JavaScript -->
   <script src="{% static 'features/vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'features/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'features/js/main.js' %}"></script>
+
 
   <!-- Plugin JavaScript -->
   <script src="{% static 'features/vendor/jquery-easing/jquery.easing.min.js' %}"></script>

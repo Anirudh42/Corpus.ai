@@ -4,7 +4,7 @@ body {
   }
   
   .file-upload {
-    background-color: #ffffff;
+    background-color: transparent;
     width: 300px;
     margin: 0 auto;
     padding: 20px;
@@ -75,7 +75,7 @@ body {
   }
   
   .file-upload {
-    background-color: #ffffff;
+    background-color: transparent;
     width: 600px;
     margin: 0 auto;
     padding: 20px;
@@ -148,7 +148,7 @@ body {
   .drag-text h3 {
     font-weight: 100;
     text-transform: uppercase;
-    color: #15824B;
+    color:  #ffffff ;
     padding: 60px 0;
   }
   
