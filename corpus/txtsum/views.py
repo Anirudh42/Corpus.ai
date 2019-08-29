@@ -26,7 +26,7 @@ def image(request):
     corpus = pytesseract.image_to_string(im, config=config)
     print(corpus)
     # Print recognized text
-    return render(request, 'features/index.html',context={})
+    return render(request, 'features/index.html',context={'corpus':corpus})
 
 # def doc2txt(request):
 #     return 0
