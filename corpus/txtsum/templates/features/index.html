@@ -100,6 +100,11 @@
                         <a href="camera"><h3>Confirm to Open your Camera!</h3></a>
                         <p class="text-muted">We will read the Text from Image for you</p>
                       </div>
+                    </div>
+                  </div>
+                    <hr>
+                      <div class="col my-auto text-center">
+                      <a href="#summary" class="btn btn-outline btn-xl js-scroll-trigger" onclick="summ()">Summarize!</a>
                     <!-- </div> -->
                 </div>
                 </div>
@@ -135,7 +140,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 mx-auto">
-      {% comment %} <input type="hidden" id="myVar" name="variable" value="{{ corpus }}"> {% endcomment %}
+      <input type="hidden" id="myVar" name="variable" value="{{ corpus }}">
       <textarea id="comment" style="width: 400px; padding: 10px; height: 150px; margin:auto; 
           display: none; font-family:Sans-serif; font-size:1.2em;">
           {{corpus}}     
