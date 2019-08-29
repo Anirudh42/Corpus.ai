@@ -10,11 +10,13 @@ corpus=''
 # Create your views here.
 def features(request):
     corpus = request.session.get('corpus')
+    print("Inside features")
     print(corpus)
     return render(request, 'features/index.html',context={'corpus':corpus})
 
 def camera(request):
     return render(request, 'features/camera.html',context={})
+
 
 def image(request):
     print('Image is Available here...')
@@ -27,7 +29,7 @@ def image(request):
     im = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     # Run tesseract OCR on image
     corpus = pytesseract.image_to_string(im, config=config)
-    # print(corpus)
+    print(corpus)
     request.session['corpus'] = corpus
     # Print recognized text
     return redirect('features')
