@@ -1,15 +1,18 @@
 from django.shortcuts import render
 from django.forms import forms
+from django.shortcuts import redirect
 import cv2
 import sys
 import pytesseract
 import io
 import numpy as np
-corpus= ''
-
+corpus=''
 # Create your views here.
 def features(request):
-    return render(request, 'features/index.html', context={})
+    corpus = request.session.get('corpus')
+    print(corpus)
+    return render(request, 'features/index.html',context={'corpus':corpus})
+
 def camera(request):
     return render(request, 'features/camera.html',context={})
 
@@ -24,9 +27,10 @@ def image(request):
     im = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     # Run tesseract OCR on image
     corpus = pytesseract.image_to_string(im, config=config)
-    print(corpus)
+    # print(corpus)
+    request.session['corpus'] = corpus
     # Print recognized text
-    return render(request, 'features/index.html',context={'corpus':corpus})
+    return redirect('features')
 
 # def doc2txt(request):
 #     return 0
