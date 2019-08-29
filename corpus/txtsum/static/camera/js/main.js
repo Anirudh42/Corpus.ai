@@ -319,9 +319,4 @@ function blobToFile(theBlob, fileName){
     return theBlob;
 }
 
-function summ(){
-    var corpus1 = '{{corpus}}';
-    document.getElementById("comment").style.display = "block";
-    document.getElementById("comment").innerHTML = corpus1;
-}
 
