@@ -42,11 +42,17 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#download">Download App Version</a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#features">Upload Data</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#summary">Summarize</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#qna">Q&A</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
@@ -100,9 +106,9 @@
                         <a href="camera"><h3>Confirm to Open your Camera!</h3></a>
                         <p class="text-muted">We will read the Text from Image for you</p>
                       </div>
-                    <!-- </div> -->
-                </div>
-                </div>
+                    </div>
+                  </div>
+
 
                 <div class="col-lg my-auto" id="url1" style="display:none">
                   <!-- <div class="container-fluid"> -->
@@ -127,17 +133,34 @@
                   </div>
                 </div>
               </div>
+              <hr>
+              <div class="col my-auto text-center" id="go">
+                <a href="#summary" class="btn btn-outline btn-xl js-scroll-trigger" onclick="summ()">Let's Go!</a>
+              <!-- </div> -->
+          </div>
         </section>
+
 
   </header>
 
+
   <section class="download bg-primary text-center" id="summary">
+    <div class="container">
+      <div class="section-heading text-center">
+        <h2>Summarize!</h2>
+            <p>Automatic summarization is the process of shortening a text document with software. We provide you crisp short summary of your large corpus uploaded above</p>
+      </div>
+     </div>
+  </section>
+
+  <!-- <section class="download bg-primary text-center" id="summary">
     <div class="container">
       <div class="row">
         <div class="col-md-8 mx-auto">
       <input type="hidden" id="myVar" name="variable" value="{{ corpus }}">
       <textarea id="comment" style="width: 400px; padding: 10px; height: 150px; margin:auto; 
-          display: none; font-family:Sans-serif; font-size:1.2em;">     
+          display: none; font-family:Sans-serif; font-size:1.2em;">
+          {{corpus}}     
       </textarea>          
       <p>Our app is available on any mobile device! Download now to get started!</p>
           <div class="col my-auto text-center">
@@ -154,19 +177,14 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
 
   <section class="features" id="qna">
     <div class="container">
       <div class="section-heading text-center">
         <h2>Question Answering Task!</h2>
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Enter your Question" aria-label="Recipient's username" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button">Answer/button>
-          </div>
-        </div>
+            <p>Question answering systems can pull answers from an unstructured collection of natural language documents.We use Pre-trained BERT model to answer your questions on the corpus you uploaded above </p>
       </div>
      </div>
   </section>
@@ -181,44 +199,50 @@
       <div class="overlay"></div>
     </section>
 
-  <section class="contact bg-primary" id="contact">
-    <div class="container">
-      <h2>We
-        <i class="fas fa-heart"></i>
-        Machine Learning!</h2>
-      <ul class="list-inline list-social">
-        <li class="list-inline-item social-twitter">
-          <a href="#">
-            <i class="fab fa-twitter"></i>
-          </a>
-        </li>
-        <li class="list-inline-item social-facebook">
-          <a href="#">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-        </li>
-        <li class="list-inline-item social-google-plus">
-          <a href="#">
-            <i class="fab fa-google-plus-g"></i>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
-
+    <section class="contact bg-primary" id="contact">
+      <div class="container">
+        <h2>We
+          <i class="fas fa-heart"></i>
+          Machine Learning!</h2>
+          <h3>Created By</h3>
+          <p><a color="hotpink" href="https://www.linkedin.com/in/ganesh-rajasekar/">Ganesh Rajasekar</a> and <a href="https://www.linkedin.com/in/vyas-anirudh-akundy-9a8033129/">Vyas Anirudh Akkundy!</a></p>
+          <p>Graduate Students from University of Waterloo, Canada</p>
+        <!-- <ul class="list-inline list-social">
+          <li class="list-inline-item social-twitter">
+            <a href="#">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li class="list-inline-item social-facebook">
+            <a href="#">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+          </li>
+          <li class="list-inline-item social-google-plus">
+            <a href="#">
+              <i class="fab fa-google-plus-g"></i>
+            </a>
+          </li>
+        </ul> -->
+      </div>
+      <!-- <div class="column">
+        <img src="{% static 'img/ganesh.jpg' %}" alt="Sno" style="width:50%">
+      </div>
+      <div class="column">
+        <img src="{% static 'img/anirudh.jpg' %}" alt="Forest" style="width:10%">
+      </div> -->
+    </section>
+    
   
-  <footer>
+    <footer>
       <div class="container">
         <p>&copy; Ganesh Rajasekar & Vyas Anirudh Akkundy. All Rights Reserved.</p>
         <ul class="list-inline">
           <li class="list-inline-item">
-            <a href="#">Privacy</a>
+            <a href="https://startbootstrap.com/themes/new-age/">Thanks to startbootstrap.com</a>
           </li>
           <li class="list-inline-item">
-            <a href="#">Terms</a>
-          </li>
-          <li class="list-inline-item">
-            <a href="#">FAQ</a>
+            <a href="https://www.linkedin.com/in/ganesh-rajasekar/">Please feel free to reach out for Additional Qns</a>
           </li>
         </ul>
       </div>
@@ -234,6 +258,7 @@
 
   <!-- Custom scripts for this template -->
   <script src="{% static 'features/js/new-age.min.js' %}"></script>
+
 
 </body>
 

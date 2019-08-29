@@ -10,11 +10,13 @@ corpus=''
 # Create your views here.
 def features(request):
     corpus = request.session.get('corpus')
+    print("Inside features")
     print(corpus)
     return render(request, 'features/index.html',context={'corpus':corpus})
 
 def camera(request):
     return render(request, 'features/camera.html',context={})
+
 
 def image(request):
     print('Image is Available here...')

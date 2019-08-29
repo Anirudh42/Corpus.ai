@@ -1,6 +1,5 @@
 function readURL(input) {
     if (input.files && input.files[0]) {
-      console.log(input.files[0]);
       var reader = new FileReader();
   
       reader.onload = function(e) {
@@ -32,6 +31,12 @@ function readURL(input) {
           $('.image-upload-wrap').removeClass('image-dropping');
   });
 
+
+
+function summ() {
+  document.getElementById("comment").style.display = "block";
+  // document.getElementById("comment").innerHTML = summary_text;
+}
   function summ(){
     document.getElementById("comment").style.display = "block";
     var corpus = document.getElementById("myVar").value;
