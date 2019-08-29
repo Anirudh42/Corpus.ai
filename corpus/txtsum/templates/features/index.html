@@ -96,7 +96,7 @@
                   </div>
                     <hr>
                       <div class="col my-auto text-center">
-                      <a href="#summary" class="btn btn-outline btn-xl js-scroll-trigger" onclick=summary()>Summarize!</a>
+                      <a href="#summary" class="btn btn-outline btn-xl js-scroll-trigger" onclick=summ()>Summarize!</a>
                       </div>
                     <hr>
                       <div class="col my-auto text-center">
@@ -113,7 +113,7 @@
         <div class="col-md-8 mx-auto">
           {% comment %} <h2 class="section-heading">Summary:</h2> {% endcomment %}
       <textarea id="comment" style="width: 400px; padding: 10px; height: 150px; margin:auto; 
-          display: none; font-family:Sans-serif; font-size:1.2em;">      
+          display: none; font-family:Sans-serif; font-size:1.2em;">     
       </textarea>          
       <p>Our app is available on any mobile device! Download now to get started!</p>
           <div class="col my-auto text-center">
@@ -207,6 +207,14 @@
   <!-- Custom scripts for this template -->
   <script src="{% static 'features/js/new-age.min.js' %}"></script>
 
+  <script>
+  var summary = '{{corpus}}';
+  console.log(summary);
+  function summ(){
+  document.getElementById("comment").style.display = "block";
+  document.getElementById("comment").innerHTML = summary;
+  }
+  </script>
 
 </body>
 
