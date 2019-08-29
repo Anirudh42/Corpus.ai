@@ -235,7 +235,7 @@ function takeSnapshot() {
                 success: function (response) {
                     console.log('hello')
                     // document.write(response);
-                    location.replace('/home/')
+                    location.replace('/home/features')
                     // document.getElementById('username').setAttribute('value', response.username);
                 },
                 error: function (error) {
