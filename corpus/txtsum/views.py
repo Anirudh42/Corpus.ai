@@ -9,17 +9,20 @@ import numpy as np
 corpus=''
 # Create your views here.
 def features(request):
-    corpus = request.session.get('corpus')
+    corpus1 = request.session.get('corpus')
     print("Inside features")
-    print(corpus)
-    return render(request, 'features/index.html',context={'corpus':corpus})
+    print(corpus1)
+    return render(request, 'features/index.html',context={'corpus':corpus1})
 
 def camera(request):
     return render(request, 'features/camera.html',context={})
 
 
 def chatbot(request):
-    return render(request, 'chatbot/index.html')
+    corpus2 = request.session.get('corpus')
+    print("Inside Chatbot")
+    print(corpus2)
+    return render(request, 'chatbot/index.html', context={'corpus': corpus2})
 
 
 def image(request):
