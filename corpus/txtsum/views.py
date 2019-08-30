@@ -17,6 +17,11 @@ def features(request):
 def camera(request):
     return render(request, 'features/camera.html',context={})
 
+
+def chatbot(request):
+    return render(request, 'chatbot/index.html')
+
+
 def image(request):
     print('Image is Available here...')
     myform = forms.Form(request.POST, request.FILES)
