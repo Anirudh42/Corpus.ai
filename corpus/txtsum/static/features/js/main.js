@@ -71,7 +71,6 @@ function readURL(input) {
           contentType: false,
           processData: false,
           success: function (data) {
-              console.log('Got Summary Going to Chatbot:',data);
               sessionStorage.setItem('summary', data)
               location.replace('/home/features/chatbot')
           },

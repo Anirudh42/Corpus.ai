@@ -41,7 +41,7 @@ function chatbotResponse() {
     // botMessage = sessionStorage.getItem('summary')
     // botMessage = "I'm confused"; //the default message
 
-    if (lastUserMessage === 'hi' || lastUserMessage == 'hello') {
+    if (lastUserMessage === 'hi' || lastUserMessage == 'hello' || lastUserMessage === 'Hi' || lastUserMessage == 'Hello') {
         const hi = ['hi', 'howdy', 'hello']
         botMessage = "Hello,  I am here to help you understand that text you sent me. You can also ask me as many questions about the text as you want";;
     }
@@ -50,10 +50,12 @@ function chatbotResponse() {
         botMessage = 'My name is ' + botName;
     }
     else if (lastUserMessage == 'summarize'){
-        botMessage = sessionStorage.getItem('summary')
+        botMessage = sessionStorage.getItem('summary');
     }
     else{
-        botMessage = "Done"
+        
+        answer(lastUserMessage);
+        botMessage = sessionStorage.getItem('answer');
     }
 }
 //****************************************************************
@@ -132,59 +134,26 @@ function placeHolder() {
     document.getElementById("chatbox").placeholder = "Type 'summarize' to summarize the text";
 }
 
-
-function summarize(lastUserMessage){
-
+  function answer(lastUserMessage){
       var fd = new FormData();
       fd.append('csrfmiddlewaretoken', csrftoken);
+      fd.append('text', lastUserMessage);
       var tet1 = $.ajax({
-          url: '/home/features/sumtext',
+          url: '/home/features/qna',
           type: 'POST',
           data: fd,
           async: false,
           contentType: false,
           processData: false,
-          success: function (response) {
-              
-            console.log(response.context);
-            //   
+          success: function (data) {
+            sessionStorage.setItem('answer', data)
+            console.log(data)
           },
           error: function (error) {
               console.log(error);
           }
       }).responseText;
     
-
-    return tet1
-  }
-
-
-  function answer(){
-    var options = document.getElementById("option").value;
-    if (options == "4"){
-      console.log("hi");
-      var fd = new FormData();
-      fd.append('csrfmiddlewaretoken', csrftoken);
-      fd.append('text', document.getElementById("corpus").value);
-      var tet1 = $.ajax({
-          url: '/home/features/qna',
-          type: 'POST',
-          data: fd,
-          dataType: 'json',
-          success: function (response) {
-              
-              // var value1 = '{{corpus}}';
-              // console.log(value1);
-              // document.write(response);
-              console.log(response.context);
-              // document.getElementById('username').setAttribute('value', response.username);
-          },
-          error: function (error) {
-              console.log(error);
-          }
-      }).responseText;
-    }
-    return tet1
   }
 
 

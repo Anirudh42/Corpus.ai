@@ -43,20 +43,20 @@ def chatbot(request):
 #Summarizes the text given by calling model
 def sumtext(request):
     corpus = request.POST['text']
-    print('Inside Sumtext',corpus)
     request.session['corpus'] = corpus
+    # Replace Model Summary here
     # answer = ''.join(sum_model(corpus, min_length=30))
     request.session['summarize'] = 'Summary'
     return HttpResponse('The Summary of the document you uploaded is: '+ 'Summary')
 
 def qna(request):
-    myform = forms.Form(request.POST, request.FILES)
-
-    question = myform.files['text']
+    qn = request.POST['text']
     corpus = request.session.get('corpus')
-    # answer = ''.join(qna_model([corpus],[question]))
+    print('Corpus:',corpus)
+    #Replace Model Answer here
+    # answer = ''.join(qna_model([corpus],[qnn]))
     request.session['answer'] = 'Answer'
-    return 'answer'
+    return HttpResponse('My Answer')
 
 #Converts Image into text and sets the corpus field
 def image(request):
