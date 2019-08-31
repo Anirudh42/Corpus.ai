@@ -1,24 +1,20 @@
-//links
-//http://eloquentjavascript.net/09_regexp.html
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
-
 var csrftoken = getCookie("csrftoken");
 
 
 function getCookie(name) {
-  var cookieValue = null; 
-  if (document.cookie && document.cookie != '') {
-      var cookies = document.cookie.split(';');
-      for (var i = 0; i < cookies.length; i++) {
-          var cookie = jQuery.trim(cookies[i]);
-          // Does this cookie string begin with the name we want?
-          if (cookie.substring(0, name.length + 1) == (name + '=')) {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-          }
-      }
-  }
-  return cookieValue;
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
 
 var messages = [], //array that hold the record of each string in chat
@@ -38,9 +34,10 @@ var messages = [], //array that hold the record of each string in chat
 //edit this function to change what the chatbot says
 function chatbotResponse() {
     talking = false;
-    botMessage = "I'm confused"; //the default message
+    // botMessage = sessionStorage.getItem('summary')
+    // botMessage = "I'm confused"; //the default message
 
-    if (lastUserMessage === 'hi' || lastUserMessage == 'hello') {
+    if (lastUserMessage === 'hi' || lastUserMessage == 'hello' || lastUserMessage === 'Hi' || lastUserMessage == 'Hello') {
         const hi = ['hi', 'howdy', 'hello']
         botMessage = "Hello,  I am here to help you understand that text you sent me. You can also ask me as many questions about the text as you want";;
     }
@@ -48,11 +45,15 @@ function chatbotResponse() {
     else if (lastUserMessage === 'name') {
         botMessage = 'My name is ' + botName;
     }
-    else if (lastUserMessage == 'summarize'){
-        botMessage = summarize(lastUserMessage);
+    else if (lastUserMessage == 'summarize') {
+        botMessage = sessionStorage.getItem('summary');
+        console.log("Here:"+botMessage);
+        
     }
-    else{
-        botMessage = "Done"
+    else {
+
+        answer(lastUserMessage);
+        botMessage = sessionStorage.getItem('answer');
     }
 }
 //****************************************************************
@@ -75,7 +76,7 @@ function newEntry() {
         //sets the chat box to be clear
         document.getElementById("chatbox").value = "";
         //adds the value of the chatbox to the array messages
-        messages.push("<b>You</b>: "+lastUserMessage);
+        messages.push("<b>You</b>: " + lastUserMessage);
         //Speech(lastUserMessage);  //says what the user typed outloud
         //sets the variable botMessage in response to lastUserMessage
         chatbotResponse();
@@ -112,7 +113,7 @@ document.onkeypress = keyPress;
 //if the key pressed is 'enter' runs the function newEntry()
 function keyPress(e) {
     console.log("enter");
-        
+
     var x = e || window.event;
     var key = (x.keyCode || x.which);
     if (key == 13 || key == 3) {
@@ -131,176 +132,24 @@ function placeHolder() {
     document.getElementById("chatbox").placeholder = "Type 'summarize' to summarize the text";
 }
 
+function answer(lastUserMessage) {
+    var fd = new FormData();
+    fd.append('csrfmiddlewaretoken', csrftoken);
+    fd.append('text', lastUserMessage);
+    var tet1 = $.ajax({
+        url: '/home/features/qna',
+        type: 'POST',
+        data: fd,
+        async: false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            sessionStorage.setItem('answer', data)
+            console.log(data)
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    }).responseText;
 
-function summarize(lastUserMessage){
-
-      var fd = new FormData();
-      fd.append('csrfmiddlewaretoken', csrftoken);
-      var tet1 = $.ajax({
-          url: '/home/features/sumtext',
-          type: 'POST',
-          data: fd,
-          async: false,
-          contentType: false,
-          processData: false,
-          success: function (response) {
-              
-            console.log(response.context);
-            //   
-          },
-          error: function (error) {
-              console.log(error);
-          }
-      }).responseText;
-    
-
-    return tet1
-  }
-
-
-  function answer(){
-    var options = document.getElementById("option").value;
-    if (options == "4"){
-      console.log("hi");
-      var fd = new FormData();
-      fd.append('csrfmiddlewaretoken', csrftoken);
-      fd.append('text', document.getElementById("corpus").value);
-      var tet1 = $.ajax({
-          url: '/home/features/qna',
-          type: 'POST',
-          data: fd,
-          dataType: 'json',
-          success: function (response) {
-              
-              // var value1 = '{{corpus}}';
-              // console.log(value1);
-              // document.write(response);
-              console.log(response.context);
-              // document.getElementById('username').setAttribute('value', response.username);
-          },
-          error: function (error) {
-              console.log(error);
-          }
-      }).responseText;
-    }
-    return tet1
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // {% comment %} <h2>Build a Chatbot</h2>
-// //     <p>Write a program that responds to the user's text input.</p>
-// //     <ul style="list-style-type:disc">
-// //         <li>Input strings of text from the user.</li>
-// //         <li>Output different strings of text in response.</li>
-// //         <li>Here is my attempt:  <a href="https://codepen.io/lilgreenland/pen/zqXLeJ">notbot</a>
-// //   </ul>
-// //         <br>
-// //             <h3><p>How to Use This Template!</p></h3>
-// //             <p>Fork this template!</p>
-// //             <p>The template has several functions that allow you to focus on programming the chatbot's behavoir. It will read in the user's strings from the input box. It will keep a record of every message and display the last few messages above the input box.</p>
-// //             <p>To control what the chatbot will say make changes to the javascript function <b>chatbotResponse()</b> . You can also change the HTML or CSS. There is no need to keep these directions.</p>
-// //             <p>The variable <b>lastUserMessage</b> is a string that records the last thing typed.</p>
-// //             <p>The variable <b>botMessage</b> is a string that controls what the chatbot will say.</p>
-// //             <p>Example:</p>
-// //             <pre><code>if (lastUserMessage === 'hi'){
-// //                 botMessage = 'Howdy!';
-// //                 }</pre></code>
-// //             <pre><code>if (lastUserMessage === 'what is your name'){
-// //                 botMessage = 'My name is' + botName;
-// //                 }</pre></code>
-
-
-// //             <br>
-// //                 <br>
-// //                     <h3><p>Ideas</p></h3>
-// //                     <p>Narrow the range of topics the chatbot responds to, like an adventure time chatbot.</p>
-// //                     <p>Customize the html and CSS to fit your theme.</p>
-// //                     <p>If you only have a few responses, tell the user what commands work.</p>
-// //                     <p>Use a <a href="https://www.w3schools.com/js/js_switch.asp">switch statement</a> to simplify a large number of if else branches.</p>
-
-// //                     <br>
-// //                         <br>
-// //                             <h3><p>Advanced Ideas</p></h3>
-// //                             <p>Use the <a href="https://www.w3schools.com/jsref/jsref_tolowercase.asp">.tolowercase()</a> command to ignore capitalization.</p>
-// //                             <p>Make variables to keep track of what's been said. Use those variables in an If stement to produce a new set of responses.</p>
-
-// //                             <p>Respond to the users by using what they said. For example:</p>
-// //                             <pre><b>User:</b> I like puppies
-// // <b>Chatbot:</b> Tell me more about puppies.</pre>
-
-// //                             <p>Use the <a href="https://www.w3schools.com/jsref/jsref_obj_date.asp">date</a> function to answer questions like "what time is it?".</p>
-// //                             <p>Quizbot?</p>
-// //                             <p>Calculator Mathbot?</p>
-// //                             <p>Canvas drawbot!</p>
-// //                             <p>Write a text adventure game. Like <a href="http://www.web-adventures.org/">these</a>.</p>
-// //                             <p>Build an array with several similar responses and have the chatbot pick one at random, like this:
-// //     <pre><code>var hi = ['hi','howdy','hello','hey'];
-// // botMessage = hi[Math.floor(Math.random()*(hi.length))];</pre></code></p>
-// //                             <p>Use <a href="https://www.w3schools.com/js/js_regexp.asp">regular expressions</a> for powerful searches.  Here is my <a href="https://codepen.io/lilgreenland/pen/YGENqK?editors=0010">example</a></p>
-
-// //                             <p>Regular expressions can search in a way similar to a google search. This example searches for words that are cat-like. It also ignores capitalization and looks for the words preceded and followed by spaces.</p>
-// //                             <pre><code>var n = lastUserMessage.search(/\b(cat|cats|kitten|feline)\b/i);
-// // if (n !== -1) {
-// //                                     botMessage = 'I hate cats!';
-// //                                 } </pre></code>
-
-// //                             <p>Here is an example that looks for ways to say dog as singular or plural. It then repeats back the dog related word to the user.</p>
-// //                             <pre><code>var patt = /\b(dogs?|pup(s|py|pies?)?|canines?)\b/i;
-// //                           var result = patt.exec(lastUserMessage);
-// // if (result) {
-// //                                     botMessage = 'I love ' + result[0];
-// //                                 } </pre></code>
-// //                             <br>
-// //                                 <br>
-// //                                     <h3><p>Links:</p></h3>
-// //                                     <ul style="list-style-type:disc">
-// //                                         <li><a href="https://www.w3schools.com/js/js_strings.asp">tutorial on strings</a></li>
-// //                                         <li><a href="https://www.w3schools.com/js/js_string_methods.asp">string methods</a></li>
-// //                                         <li><a href="https://www.w3schools.com/jsref/jsref_obj_string.asp">string reference</a></li>
-// //                                         <li><a href="https://www.w3schools.com/js/js_regexp.asp">regular expressions tutorial</a></li>
-// //                                         <li><a href="https://www.w3schools.com/jsref/jsref_obj_regexp.asp">W3 schools regular expressions reference</a></li>
-// //                                         <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">MDN regular expressions reference</a></li>
-// //                                         <li><a href="http://regexr.com/">Testing your regular expressions</a></li>
-// //                                     </ul>
-// //                                     <center><img src="https://lilgreenland.github.io/images/BMO.jpg" align="middle"></center>
-// // </div> {% endcomment %}
+}

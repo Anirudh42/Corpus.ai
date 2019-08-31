@@ -14,53 +14,61 @@ from django.http import HttpResponse
 # qna_model = build_model(configs.squad.squad, download=True)
 # from summarizer import SingleModel
 # sum_model = SingleModel()
-corpus1=''
+corpus = ''
 
 #Set Corpus
+
+
 def corpus(request):
     print("Got Corpus from JS")
-    
-    
+
 
 #Features Page For Upload Options
 def features(request):
-    corpus1 = request.session.get('corpus')
+    corpus = request.session.get('corpus')
     print("Inside features")
-    print(corpus1)
-    return render(request, 'features/index.html',context={'corpus':corpus1})
+    print(corpus)
+    return render(request, 'features/index.html', context={'corpus': corpus})
 
 #Camera Option renders Camera
+
+
 def camera(request):
-    return render(request, 'features/camera.html',context={})
+    return render(request, 'features/camera.html', context={})
 
 #Renders Chatbot Page by getting summary,answer and corpus
+
+
 def chatbot(request):
-    answer = request.session.get('summarize')
-    qna = request.session.get('answer')
-    corpus = request.session.get('corpus')
-    return render(request, 'chatbot/index.html',context={'corpus':corpus,'summarize':answer,'qna':qna})
+    # answer = request.session.get('summarize')
+    # qna = request.session.get('answer')
+    # corpus = request.session.get('corpus')
+    return render(request, 'chatbot/index.html', context={})
 
 #Summarizes the text given by calling model
+
+
 def sumtext(request):
-    print("Inside Summarize")
     corpus = request.POST['text']
     request.session['corpus'] = corpus
     # Replace Model Summary here
     # answer = ''.join(sum_model(corpus, min_length=30))
     request.session['summarize'] = 'Summary'
-    return HttpResponse(request.session.get('summarize'))
+    return HttpResponse(corpus)
+
 
 def qna(request):
-    print("Inside QA")
     qn = request.POST['text']
     corpus = request.session.get('corpus')
-    print('Corpus:',corpus)
+    print('Corpus:', corpus)
     #Replace Model Answer here
     # answer = ''.join(qna_model([corpus],[qnn]))
     request.session['answer'] = 'Answer'
     return HttpResponse(request.session.get('answer'))
 
 #Converts Image into text and sets the corpus field
+
+
 def image(request):
     print('Image is Available here...')
     myform = forms.Form(request.POST, request.FILES)
