@@ -128,13 +128,13 @@
                 <div class='file-upload'>
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1"></label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Enter your Text here" rows="10"></textarea>
+                    <textarea id="textarea" class="form-control" id="exampleFormControlTextarea1" placeholder="Enter your Text here" rows="10"></textarea>
                   </div>
                 </div>
               </div>
               <hr>
-              <div class="col my-auto text-center" id="go">
-                <a href="{% url 'chatbot' %}" class="btn btn-outline btn-xl js-scroll-trigger">Let's Go!</a>
+              <div class="col my-auto text-center" id="go" style="display:none">
+                <a id="option"class="btn btn-outline btn-xl js-scroll-trigger" value="" onclick="send()">Let's Go!</a>
               <!-- </div> -->
           </div>
         </section>
