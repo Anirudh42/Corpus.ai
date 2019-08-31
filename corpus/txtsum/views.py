@@ -6,6 +6,8 @@ import sys
 import pytesseract
 import io
 import numpy as np
+from django.http import HttpResponse
+
 
 #MODEL Code
 # from deeppavlov import build_model, configs
@@ -16,10 +18,9 @@ corpus=''
 
 #Set Corpus
 def corpus(request):
-    print("Inside cropis")
-    corpus = request.POST['text']
-    request.session['corpus'] = corpus
-    return redirect('chatbot')
+    print("Got Corpus from JS")
+    
+    
 
 #Features Page For Upload Options
 def features(request):
@@ -41,10 +42,13 @@ def chatbot(request):
 
 #Summarizes the text given by calling model
 def sumtext(request):
-    corpus = request.session.get('corpus')
+    corpus = request.POST['text']
+    print('Inside Sumtext',corpus)
+    request.session['corpus'] = corpus
     # answer = ''.join(sum_model(corpus, min_length=30))
     request.session['summarize'] = 'Summary'
-    return redirect('chatbot')
+    return HttpResponse('The Summary of the document you uploaded is: '+ 'Summary')
+
 def qna(request):
     myform = forms.Form(request.POST, request.FILES)
 

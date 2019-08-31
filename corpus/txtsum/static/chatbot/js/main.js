@@ -38,7 +38,8 @@ var messages = [], //array that hold the record of each string in chat
 //edit this function to change what the chatbot says
 function chatbotResponse() {
     talking = false;
-    botMessage = "I'm confused"; //the default message
+    // botMessage = sessionStorage.getItem('summary')
+    // botMessage = "I'm confused"; //the default message
 
     if (lastUserMessage === 'hi' || lastUserMessage == 'hello') {
         const hi = ['hi', 'howdy', 'hello']
@@ -49,7 +50,7 @@ function chatbotResponse() {
         botMessage = 'My name is ' + botName;
     }
     else if (lastUserMessage == 'summarize'){
-        botMessage = summarize(lastUserMessage);
+        botMessage = sessionStorage.getItem('summary')
     }
     else{
         botMessage = "Done"
