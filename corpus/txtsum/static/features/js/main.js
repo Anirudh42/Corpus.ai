@@ -1,3 +1,23 @@
+var csrftoken = getCookie("csrftoken");
+
+
+
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie != '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) == (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+
 function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
@@ -33,21 +53,47 @@ function readURL(input) {
 
 
 
-function summ() {
-  document.getElementById("comment").style.display = "block";
-  // document.getElementById("comment").innerHTML = summary_text;
-}
-  function summ(){
-    document.getElementById("comment").style.display = "block";
-    var corpus = document.getElementById("myVar").value;
-    document.getElementById("comment").innerHTML = corpus;
+// ##########################Start of Custom Code#####################
+  function send(){
+    var options = document.getElementById("option").value;
+    // console.log("HI")
+    if (options == "4"){
+      var fd = new FormData();      
+
+      fd.append('csrfmiddlewaretoken', csrftoken);
+      fd.append('text', document.getElementById("textarea").value);
+      console.log('Ajax')
+      var tet1 = $.ajax({
+          url: '/home/features/corpus',
+          type: 'POST',
+          data: fd,
+          async: false,
+          contentType: false,
+          processData: false,
+          success: function (response) {
+              console.log('Ajaxs')
+              location.replace('/home/features/chatbot')
+          },
+          error: function (error) {
+              console.log(error);
+          }
+      }).responseText;
+    }
+    // console.log(tet1);
   }
+
+
+
+// #################Toggle Functions###############
 
   function file(){
       var x = document.getElementById("File");
       var y = document.getElementById("img1");
       var z = document.getElementById("url1");
       var t = document.getElementById("text1");
+      var go = document.getElementById("go");
+      document.getElementById("option").value = "1";
+      go.style.display = "block"
       if (x.style.display === "none") {
         x.style.display = "block";
         y.style.display = "none";
@@ -64,6 +110,9 @@ function summ() {
     var y = document.getElementById("img1");
     var z = document.getElementById("url1");
     var t = document.getElementById("text1");
+    var go = document.getElementById("go");
+    document.getElementById("option").value = "3";
+    go.style.display = "block"
     if (z.style.display === "none") {
       x.style.display = "none";
       y.style.display = "none";
@@ -80,11 +129,15 @@ function img1(){
   var y = document.getElementById("img1");
   var z = document.getElementById("url1");
   var t = document.getElementById("text1");
+  var go = document.getElementById("go");
+  document.getElementById("option").value = "2";
+  go.style.display = "block"
   if (y.style.display === "none") {
     x.style.display = "none";
     y.style.display = "block";
     z.style.display = "none";
     t.style.display = "none";
+
   } else {
     y.style.display = "none";
   }
@@ -92,11 +145,13 @@ function img1(){
 }
 
 function text1(){
-  console.log("HI")
   var x = document.getElementById("File");
   var y = document.getElementById("img1");
   var z = document.getElementById("url1");
   var t = document.getElementById("text1");
+  var go = document.getElementById("go");
+  document.getElementById("option").value = "4";
+  go.style.display = "block"
   if (t.style.display === "none") {
     x.style.display = "none";
     y.style.display = "none";

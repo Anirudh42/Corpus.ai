@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- <!DOCTYPE html>
+<html lang="en"> -->
 
 <head>
 {%load static%}
 <link href="{% static 'features/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 <link href="{% static 'chatbot/css/styles.css' %}" rel="stylesheet">
-<script src="{% static 'chatbot/js/main.js' %}"></script>
 </head>
 <body id="page-top">
   <ul>
@@ -26,11 +25,19 @@
     <p id="chatlog3" class="chatlog">&nbsp;</p>
     <p id="chatlog2" class="chatlog">&nbsp;</p>
     <p id="chatlog1" class="chatlog">&nbsp;</p>
-    <input type="text" name="chat" id="chatbox" placeholder="Hi there! Type here to talk to me." onfocus="placeHolder()">
+    <input  type="{{summarize}}" name="chat" id="chatbox" placeholder="Hi there! Type here to talk to me." onfocus="placeHolder()">
+    <input value="{{qna}}" type="text" name="qna" id="qna" hidden>
+    <input value="{{corpus}}" type="text" name="corpus" id="corpus" hidden>
   </div>
   <br>
   <br>
 </section>
 </header>
+  <!-- Plugin JavaScript -->
+
+  <script src="{% static 'features/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'features/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'chatbot/js/main.js' %}"></script>
+
 </body>
 </html>
