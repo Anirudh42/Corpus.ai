@@ -38,10 +38,9 @@ var messages = [], //array that hold the record of each string in chat
 //edit this function to change what the chatbot says
 function chatbotResponse() {
     talking = false;
-    // botMessage = sessionStorage.getItem('summary')
-    // botMessage = "I'm confused"; //the default message
+    botMessage = "I'm confused"; //the default message
 
-    if (lastUserMessage === 'hi' || lastUserMessage == 'hello' || lastUserMessage === 'Hi' || lastUserMessage == 'Hello') {
+    if (lastUserMessage === 'hi' || lastUserMessage == 'hello') {
         const hi = ['hi', 'howdy', 'hello']
         botMessage = "Hello,  I am here to help you understand that text you sent me. You can also ask me as many questions about the text as you want";;
     }
@@ -50,12 +49,10 @@ function chatbotResponse() {
         botMessage = 'My name is ' + botName;
     }
     else if (lastUserMessage == 'summarize'){
-        botMessage = sessionStorage.getItem('summary');
+        botMessage = summarize(lastUserMessage);
     }
     else{
-        
-        answer(lastUserMessage);
-        botMessage = sessionStorage.getItem('answer');
+        botMessage = "Done"
     }
 }
 //****************************************************************
@@ -134,26 +131,59 @@ function placeHolder() {
     document.getElementById("chatbox").placeholder = "Type 'summarize' to summarize the text";
 }
 
-  function answer(lastUserMessage){
+
+function summarize(lastUserMessage){
+
       var fd = new FormData();
       fd.append('csrfmiddlewaretoken', csrftoken);
-      fd.append('text', lastUserMessage);
       var tet1 = $.ajax({
-          url: '/home/features/qna',
+          url: '/home/features/sumtext',
           type: 'POST',
           data: fd,
           async: false,
           contentType: false,
           processData: false,
-          success: function (data) {
-            sessionStorage.setItem('answer', data)
-            console.log(data)
+          success: function (response) {
+              
+            console.log(response.context);
+            //   
           },
           error: function (error) {
               console.log(error);
           }
       }).responseText;
     
+
+    return tet1
+  }
+
+
+  function answer(){
+    var options = document.getElementById("option").value;
+    if (options == "4"){
+      console.log("hi");
+      var fd = new FormData();
+      fd.append('csrfmiddlewaretoken', csrftoken);
+      fd.append('text', document.getElementById("corpus").value);
+      var tet1 = $.ajax({
+          url: '/home/features/qna',
+          type: 'POST',
+          data: fd,
+          dataType: 'json',
+          success: function (response) {
+              
+              // var value1 = '{{corpus}}';
+              // console.log(value1);
+              // document.write(response);
+              console.log(response.context);
+              // document.getElementById('username').setAttribute('value', response.username);
+          },
+          error: function (error) {
+              console.log(error);
+          }
+      }).responseText;
+    }
+    return tet1
   }
 
 
