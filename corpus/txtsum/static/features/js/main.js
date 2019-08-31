@@ -56,22 +56,22 @@ function readURL(input) {
 // ##########################Start of Custom Code#####################
   function send(){
     var options = document.getElementById("option").value;
-    // console.log("HI")
+    console.log("HI")
     if (options == "4"){
       var fd = new FormData();      
 
       fd.append('csrfmiddlewaretoken', csrftoken);
       fd.append('text', document.getElementById("textarea").value);
-      console.log('Ajax')
+      console.log('Sending Text to Django')
       var tet1 = $.ajax({
-          url: '/home/features/corpus',
+          url: '/home/features/sumtext',
           type: 'POST',
           data: fd,
           async: false,
           contentType: false,
           processData: false,
-          success: function (response) {
-              console.log('Ajaxs')
+          success: function (data) {
+              sessionStorage.setItem('summary', data)
               location.replace('/home/features/chatbot')
           },
           error: function (error) {
