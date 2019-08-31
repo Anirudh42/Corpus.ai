@@ -12,13 +12,13 @@ import numpy as np
 # qna_model = build_model(configs.squad.squad, download=True)
 # from summarizer import SingleModel
 # sum_model = SingleModel()
-corpus=''
+corpus1=''
 
 #Set Corpus
 def corpus(request):
     print("Inside cropis")
-    corpus = request.POST['text']
-    request.session['corpus'] = corpus
+    corpus1 = request.POST['text']
+    request.session['corpus'] = corpus1
     return redirect('chatbot')
 
 #Features Page For Upload Options
@@ -34,12 +34,6 @@ def camera(request):
 
 #Renders Chatbot Page by getting summary,answer and corpus
 def chatbot(request):
-<<<<<<< HEAD
-    corpus2 = request.session.get('corpus')
-    print("Inside Chatbot")
-    print(corpus2)
-    return render(request, 'chatbot/index.html', context={'corpus': corpus2})
-=======
     answer = request.session.get('summarize')
     qna = request.session.get('answer')
     corpus = request.session.get('corpus')
@@ -53,7 +47,6 @@ def sumtext(request):
     return redirect('chatbot')
 def qna(request):
     myform = forms.Form(request.POST, request.FILES)
->>>>>>> 3b5a13606090ffe141c4605deaa70895bed578e3
 
     question = myform.files['text']
     corpus = request.session.get('corpus')
