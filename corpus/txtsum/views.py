@@ -9,18 +9,13 @@ import numpy as np
 from django.http import HttpResponse
 
 
-#MODEL Code
-# from deeppavlov import build_model, configs
-# qna_model = build_model(configs.squad.squad, download=True)
-# from summarizer import SingleModel
-# sum_model = SingleModel()
+# MODEL Code
+from deeppavlov import build_model, configs
+qna_model = build_model(configs.squad.squad)
+from summarizer import SingleModel
+sum_model = SingleModel()
 corpus=''
 
-#Set Corpus
-def corpus(request):
-    print("Got Corpus from JS")
-    
-    
 
 #Features Page For Upload Options
 def features(request):
@@ -45,18 +40,22 @@ def sumtext(request):
     corpus = request.POST['text']
     request.session['corpus'] = corpus
     # Replace Model Summary here
-    # answer = ''.join(sum_model(corpus, min_length=30))
-    request.session['summarize'] = 'Summary'
-    return HttpResponse('The Summary of the document you uploaded is: '+ 'Summary')
+    answer = ''.join(sum_model(corpus, min_length=30))
+    # request.session['summarize'] = 'Summary'
+    return HttpResponse('The Summary of the document you uploaded is: '+ answer)
 
 def qna(request):
-    qn = request.POST['text']
+    qnn = request.POST['text']
     corpus = request.session.get('corpus')
-    print('Corpus:',corpus)
+    # print('Corpus:',corpus)
     #Replace Model Answer here
-    # answer = ''.join(qna_model([corpus],[qnn]))
-    request.session['answer'] = 'Answer'
-    return HttpResponse('My Answer')
+    # results = qna_model([corpus],[qnn])
+    # print(results[0])
+    # print(type(results))
+    # answer = 'Done'
+    answer = ''.join(qna_model([corpus],[qnn])[0])
+    request.session['answer'] = answer
+    return HttpResponse(answer)
 
 #Converts Image into text and sets the corpus field
 def image(request):
